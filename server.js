@@ -5,8 +5,7 @@ const app = express();
 let db;
 
 const connectionStr =
-  "mongodb+srv://j3ffh95:<password>@cluster0.ezsop.mongodb.net/<dbname>?retryWrites=true&w=majority";
-
+  "mongodb+srv://j3ffh95:soccer1995@cluster0-ezsop.mongodb.net/TodoApp1?retryWrites=true&w=majority";
 mongodb.connect(
   connectionStr,
   { useNewUrlParser: true, useUnifiedTopology: true },
