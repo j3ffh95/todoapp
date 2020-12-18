@@ -1,6 +1,20 @@
 const express = require("express");
+const mongodb = require("mongodb");
 
 const app = express();
+let db;
+
+const connectionStr =
+  "mongodb+srv://j3ffh95:<password>@cluster0.ezsop.mongodb.net/<dbname>?retryWrites=true&w=majority";
+
+mongodb.connect(
+  connectionStr,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  function (err, client) {
+    db = client.db();
+    app.listen(3000);
+  }
+);
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -59,8 +73,8 @@ app.get("/", function (req, res) {
 });
 
 app.post("/create-item", function (req, res) {
-  console.log(req.body.item);
-  res.send("Item Created");
+  // console.log(req.body.item);
+  db.collection("items").insertOne({ whatToDo: req.body.item }, function () {
+    res.send("Item Created");
+  });
 });
-
-app.listen(3000);
