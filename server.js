@@ -71,7 +71,7 @@ app.get("/", function (req, res) {
     </ul>
 
   </div>
-
+<script src="./browser.js"></script>
 </body>
 </html>
   `);
