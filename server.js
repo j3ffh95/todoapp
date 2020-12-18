@@ -86,7 +86,7 @@ app.post("/create-item", function (req, res) {
   // we use the collection method to enter what collection we want to store our data in,
   // using the inserOne method to assign the object key the value of user input.
   db.collection("items").insertOne({ whatToDo: req.body.item }, function () {
-    // once we are done with creating a todo item then we respond using the res.send()
-    res.send("Item Created");
+    // once we are done with creating a todo item then we respond using the res.redirect() which just refreshes to the base url
+    res.redirect("/");
   });
 });
