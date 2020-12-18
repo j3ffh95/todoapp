@@ -4,22 +4,36 @@ const mongodb = require("mongodb");
 const app = express();
 let db;
 
+// Connection String from MOngo DB
 const connectionStr =
   "mongodb+srv://j3ffh95:soccer1995@cluster0-ezsop.mongodb.net/TodoApp1?retryWrites=true&w=majority";
 
+// connecting the mongo db using the connect method with 3 arguments (connection String, stuff for mongodb, function that runs once we stablished connection)
 mongodb.connect(
   connectionStr,
   { useNewUrlParser: true, useUnifiedTopology: true },
   function (err, client) {
+    // assigning the client.db() return databse to the db var
     db = client.db();
+    // make our app listen once we established connection, listening to port 3000
     app.listen(3000);
   }
 );
 
+// This makes our app use the body object
 app.use(express.urlencoded({ extended: false }));
 
+// When we get a get request to the '/' url (base/index) we are going to return it with html using res.send() method
 app.get("/", function (req, res) {
-  res.send(`
+  // the find() method is Read from CRUD, and you can also build a query,
+  // find() with no args means its going to get all the data from the collection,
+  // Using the toArray() method to turn the data into an array;,
+  // the toArray method accepts a function that will be called when everything has run
+  // the callback function accepts two args one is for error the other one is the data turn into an array
+  db.collection("items")
+    .find()
+    .toArray(function (err, items) {
+      res.send(`
   <!DOCTYPE html>
 <html>
 <head>
@@ -42,27 +56,18 @@ app.get("/", function (req, res) {
     </div>
 
     <ul class="list-group pb-5">
-      <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-        <span class="item-text">Fake example item #1</span>
-        <div>
-          <button class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
-          <button class="delete-me btn btn-danger btn-sm">Delete</button>
-        </div>
-      </li>
-      <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-        <span class="item-text">Fake example item #2</span>
-        <div>
-          <button class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
-          <button class="delete-me btn btn-danger btn-sm">Delete</button>
-        </div>
-      </li>
-      <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-        <span class="item-text">Fake example item #3</span>
-        <div>
-          <button class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
-          <button class="delete-me btn btn-danger btn-sm">Delete</button>
-        </div>
-      </li>
+      ${items
+        .map((item) => {
+          return `
+        <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+          <span class="item-text">${item.whatToDo}</span>
+          <div>
+            <button class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
+            <button class="delete-me btn btn-danger btn-sm">Delete</button>
+          </div>
+        </li>`;
+        })
+        .join("")}
     </ul>
 
   </div>
@@ -70,11 +75,18 @@ app.get("/", function (req, res) {
 </body>
 </html>
   `);
+    });
 });
 
+// This listens to a POST request to our server using the action to '/create-item' page
 app.post("/create-item", function (req, res) {
   // console.log(req.body.item);
+
+  // Here we add the item that was input by the user to the collection in our database.
+  // we use the collection method to enter what collection we want to store our data in,
+  // using the inserOne method to assign the object key the value of user input.
   db.collection("items").insertOne({ whatToDo: req.body.item }, function () {
+    // once we are done with creating a todo item then we respond using the res.send()
     res.send("Item Created");
   });
 });
