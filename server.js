@@ -24,8 +24,11 @@ mongodb.connect(
   }
 );
 
-// This makes our app use the body object
+// This tells express to automatically take submitted form data and add it to a body object that
+// lives on the request object
+// also we are going to do the same thing but to make it with asynchronous requests
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // When we get a get request to the '/' url (base/index) we are going to return it with html using res.send() method
 app.get("/", function (req, res) {
@@ -96,4 +99,10 @@ app.post("/create-item", function (req, res) {
     // once we are done with creating a todo item then we respond using the res.redirect() which just refreshes to the base url
     res.redirect("/");
   });
+});
+
+// This listens to a POST request to our server, to the url of 'update-item'
+app.post("/update-item", function (req, res) {
+  console.log(req.body.text);
+  res.send("success");
 });
