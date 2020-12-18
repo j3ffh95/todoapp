@@ -6,10 +6,14 @@ document.addEventListener("click", function (e) {
     let userInput = prompt("Enter your desire new text");
 
     // Here we are going to use axios a promised-based HTTP client that makes requests to fetch or save data
-    // we are using the post method the needs 2 parameters ('post request to what url', 'an object with the new updated input')
+    // we are using the post method the needs 2 parameters ('post request to what url', 'data that is send to the server as an object')
+    // we are sending the updated todo text and also the id of each task with the data-id attribute
     // It will return a promise, it is useful when we dont know how long it is going to take to get data
     axios
-      .post("/update-item", { text: userInput })
+      .post("/update-item", {
+        text: userInput,
+        id: e.target.getAttribute("data-id"),
+      })
       .then(function () {
         // do something interesting here in the next video
       })

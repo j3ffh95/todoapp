@@ -70,7 +70,7 @@ app.get("/", function (req, res) {
         <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
           <span class="item-text">${item.whatToDo}</span>
           <div>
-            <button class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
+            <button data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
             <button class="delete-me btn btn-danger btn-sm">Delete</button>
           </div>
         </li>`;
@@ -103,6 +103,16 @@ app.post("/create-item", function (req, res) {
 
 // This listens to a POST request to our server, to the url of 'update-item'
 app.post("/update-item", function (req, res) {
-  console.log(req.body.text);
-  res.send("success");
+  // We reach for the database using the db var and then search for out collectin which is items
+  // then we use the method to update it and it takes 3 arguments
+  // the first argument is where we tell Mongo DB which document we want to update, the id key
+  // the second argument is what we want to update on that document
+  // the third argument is where we include a function that will get called once this database action has completed
+  db.collection("items").findOneAndUpdate(
+    a,
+    { $set: { text: req.body.text } },
+    function () {
+      res.send("success");
+    }
+  );
 });
