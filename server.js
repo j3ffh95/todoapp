@@ -4,6 +4,10 @@ const mongodb = require("mongodb");
 const app = express();
 let db;
 
+// Telling our express app server to allow incoming request to have access to the public folder and its content
+// This will make the contents of that folder available from the root of our server
+app.use(express.static("public"));
+
 // Connection String from MOngo DB
 const connectionStr =
   "mongodb+srv://j3ffh95:soccer1995@cluster0-ezsop.mongodb.net/TodoApp1?retryWrites=true&w=majority";
@@ -71,7 +75,7 @@ app.get("/", function (req, res) {
     </ul>
 
   </div>
-<script src="./browser.js"></script>
+<script src="/browser.js"></script>
 </body>
 </html>
   `);
