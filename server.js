@@ -109,8 +109,8 @@ app.post("/update-item", function (req, res) {
   // the second argument is what we want to update on that document
   // the third argument is where we include a function that will get called once this database action has completed
   db.collection("items").findOneAndUpdate(
-    a,
-    { $set: { text: req.body.text } },
+    { _id: new mongodb.ObjectID(req.body.id) },
+    { $set: { whatToDo: req.body.text } },
     function () {
       res.send("success");
     }
