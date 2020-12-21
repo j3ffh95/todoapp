@@ -3,7 +3,7 @@
 // then we are using the prompt method to get user data and stored in a var
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("edit-me")) {
-    // USing the pormpt method to get user input, the second argument is the populated text we want it to show
+    // Using the prompt method to get user input, the second argument is the populated text we want it to show
     let userInput = prompt(
       "Enter your desire new text",
       e.target.parentElement.parentElement.querySelector(".item-text").innerHTML
