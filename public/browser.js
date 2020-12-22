@@ -2,6 +2,23 @@
 // we are targeting the elements that only contain the 'edit-me' class
 // then we are using the prompt method to get user data and stored in a var
 document.addEventListener("click", function (e) {
+  // Delete Feature
+  if (e.target.classList.contains("delete-me")) {
+    if (confirm("Do you really want to delete this item permanently?")) {
+      axios
+        .post("/delete-item", {
+          id: e.target.getAttribute("data-id"),
+        })
+        .then(function () {
+          e.target.parentElement.parentElement.remove();
+        })
+        .catch(function () {
+          console.log("please try again later");
+        });
+    }
+  }
+
+  // Update Feature
   if (e.target.classList.contains("edit-me")) {
     // Using the prompt method to get user input, the second argument is the populated text we want it to show
     let userInput = prompt(
