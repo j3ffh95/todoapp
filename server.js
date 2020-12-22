@@ -37,7 +37,7 @@ app.use(passwordProtected);
 // Password Protected
 function passwordProtected(req, res, next) {
   res.set("WWW-Authenticate", 'Basic realm="Simple Todo App"');
-  console.log(req);
+  // console.log(req);
   if (req.headers.authorization == "Basic bGVhcm46c29jY2Vy") {
     next();
   } else {
