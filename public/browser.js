@@ -1,3 +1,21 @@
+// Create Feature
+let createField = document.querySelector("#create-field");
+
+document.querySelector("#create-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  axios
+    .post("/create-item", {
+      text: createField.value,
+    })
+    .then(function () {
+      // Create the HTML for a new item
+      alert("created a new item");
+    })
+    .catch(function () {
+      console.log("please try again later");
+    });
+});
+
 // Add an event listener to the document we are hearing for a click event
 // we are targeting the elements that only contain the 'edit-me' class
 // then we are using the prompt method to get user data and stored in a var
