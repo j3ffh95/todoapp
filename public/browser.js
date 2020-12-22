@@ -8,6 +8,14 @@ function itemTemplate(item) {
 </li>`;
 }
 
+// Client side rendering of todos
+document
+  .querySelector("#item-list")
+  .insertAdjacentHTML(
+    "beforeend",
+    items.map((item) => itemTemplate(item)).join("")
+  );
+
 // Create Feature
 let createField = document.querySelector("#create-field");
 

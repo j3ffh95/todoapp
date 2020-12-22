@@ -64,21 +64,13 @@ app.get("/", function (req, res) {
     </div>
 
     <ul id="item-list" class="list-group pb-5">
-      ${items
-        .map((item) => {
-          return `
-        <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
-          <span class="item-text">${item.whatToDo}</span>
-          <div>
-            <button data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
-            <button data-id="${item._id}" class="delete-me btn btn-danger btn-sm">Delete</button>
-          </div>
-        </li>`;
-        })
-        .join("")}
+
     </ul>
 
   </div>
+<script>
+        let items = ${JSON.stringify(items)}
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js" integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==" crossorigin="anonymous"></script>
 <script src="/browser.js"></script>
