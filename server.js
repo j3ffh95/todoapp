@@ -1,5 +1,6 @@
 const express = require("express");
 const mongodb = require("mongodb");
+let sanitizeHtml = require("sanitize-html");
 
 const app = express();
 let db;
@@ -29,6 +30,20 @@ mongodb.connect(
 // also we are going to do the same thing but to make it with asynchronous requests
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// Run the password protected function on all requests
+app.use(passwordProtected);
+
+// Password Protected
+function passwordProtected(req, res, next) {
+  res.set("WWW-Authenticate", 'Basic realm="Simple Todo App"');
+  console.log(req);
+  if (req.headers.authorization == "Basic bGVhcm46c29jY2Vy") {
+    next();
+  } else {
+    res.status(401).send("Authentication required");
+  }
+}
 
 // When we get a get request to the '/' url (base/index) we are going to return it with html using res.send() method
 app.get("/", function (req, res) {
@@ -64,7 +79,6 @@ app.get("/", function (req, res) {
     </div>
 
     <ul id="item-list" class="list-group pb-5">
-
     </ul>
 
   </div>
@@ -83,12 +97,16 @@ app.get("/", function (req, res) {
 // This listens to a POST request to our server using the action to '/create-item' page
 app.post("/create-item", function (req, res) {
   // console.log(req.body.item);
-
+  // Create a var to stored the sanitize text
+  let safeText = sanitizeHtml(req.body.text, {
+    allowedTags: [],
+    allowedAttributes: {},
+  });
   // Here we add the item that was input by the user to the collection in our database.
   // we use the collection method to enter what collection we want to store our data in,
   // using the inserOne method to assign the object key the value of user input.
   db.collection("items").insertOne(
-    { whatToDo: req.body.text },
+    { whatToDo: safeText },
     function (err, info) {
       res.json(info.ops[0]);
     }
@@ -97,6 +115,12 @@ app.post("/create-item", function (req, res) {
 
 // This listens to a POST request to our server, to the url of 'update-item'
 app.post("/update-item", function (req, res) {
+  // Created a var to stored the safe sanitize text
+  let safeText = sanitizeHtml(req.body.text, {
+    allowedTags: [],
+    allowedAttributes: {},
+  });
+
   // We reach for the database using the db var and then search for out collectin which is items
   // then we use the method to update it and it takes 3 arguments
   // the first argument is where we tell Mongo DB which document we want to update, the id key
@@ -104,7 +128,7 @@ app.post("/update-item", function (req, res) {
   // the third argument is where we include a function that will get called once this database action has completed
   db.collection("items").findOneAndUpdate(
     { _id: new mongodb.ObjectID(req.body.id) },
-    { $set: { whatToDo: req.body.text } },
+    { $set: { whatToDo: safeText } },
     function () {
       res.send("success");
     }
