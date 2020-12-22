@@ -117,7 +117,11 @@ app.post("/update-item", function (req, res) {
   );
 });
 
+// a post request to the server with the url of delete-item
 app.post("/delete-item", function (req, res) {
+  // Use the method from mongodb of deleteOne that takes 2 arguments
+  // the first arg is what document you want to delete
+  // the second arg is a function that responds when everything runs ok
   db.collection("items").deleteOne(
     { _id: new mongodb.ObjectID(req.body.id) },
     function () {
