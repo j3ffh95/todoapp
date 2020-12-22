@@ -1,3 +1,13 @@
+function itemTemplate(item) {
+  return `<li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+  <span class="item-text">${item.whatToDo}</span>
+  <div>
+    <button data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
+    <button data-id="${item._id}" class="delete-me btn btn-danger btn-sm">Delete</button>
+  </div>
+</li>`;
+}
+
 // Create Feature
 let createField = document.querySelector("#create-field");
 
@@ -7,9 +17,13 @@ document.querySelector("#create-form").addEventListener("submit", function (e) {
     .post("/create-item", {
       text: createField.value,
     })
-    .then(function () {
+    .then(function (response) {
       // Create the HTML for a new item
-      alert("created a new item");
+      document
+        .querySelector("#item-list")
+        .insertAdjacentHTML("beforeend", itemTemplate(response.data));
+      createField.value = "";
+      createField.focus();
     })
     .catch(function () {
       console.log("please try again later");
