@@ -5,6 +5,11 @@ let sanitizeHtml = require("sanitize-html");
 const app = express();
 let db;
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
 // Telling our express app server to allow incoming request to have access to the public folder and its content
 // This will make the contents of that folder available from the root of our server
 app.use(express.static("public"));
@@ -21,7 +26,7 @@ mongodb.connect(
     // assigning the client.db() return databse to the db var
     db = client.db();
     // make our app listen once we established connection, listening to port 3000
-    app.listen(3000);
+    app.listen(port);
   }
 );
 
