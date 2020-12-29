@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const mongodb = require("mongodb");
 let sanitizeHtml = require("sanitize-html");
@@ -15,12 +18,12 @@ if (port == null || port == "") {
 app.use(express.static("public"));
 
 // Connection String from MOngo DB
-const connectionStr =
-  "mongodb+srv://j3ffh95:soccer1995@cluster0-ezsop.mongodb.net/TodoApp1?retryWrites=true&w=majority";
+// const connectionStr =
+//   "mongodb+srv://j3ffh95:soccer1995@cluster0-ezsop.mongodb.net/TodoApp1?retryWrites=true&w=majority";
 
 // connecting the mongo db using the connect method with 3 arguments (connection String, stuff for mongodb, function that runs once we stablished connection)
 mongodb.connect(
-  connectionStr,
+  process.env.CONNECTIONSTRING,
   { useNewUrlParser: true, useUnifiedTopology: true },
   function (err, client) {
     // assigning the client.db() return databse to the db var
