@@ -12,6 +12,7 @@ let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
+// Test comment
 
 // Telling our express app server to allow incoming request to have access to the public folder and its content
 // This will make the contents of that folder available from the root of our server
