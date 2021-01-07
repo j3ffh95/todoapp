@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Run the password protected function on all requests
-app.use(passwordProtected);
+// app.use(passwordProtected);
 
 // Password Protected
 function passwordProtected(req, res, next) {
@@ -75,7 +75,7 @@ app.get("/", function (req, res) {
 </head>
 <body>
   <div class="container">
-    <h1 class="display-4 text-center py-1">To-Do App!</h1>
+    <h1 class="display-4 text-center py-1">To-Do App</h1>
 
     <div class="jumbotron p-3 shadow-sm">
       <form id="create-form" action='/create-item' method='POST'>
