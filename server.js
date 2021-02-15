@@ -18,7 +18,7 @@ if (port == null || port == "") {
 // This will make the contents of that folder available from the root of our server
 app.use(express.static("public"));
 
-// Connection String from MOngo DB
+// Connection String from Mongo DB
 // const connectionStr =
 //   "mongodb+srv://j3ffh95:soccer1995@cluster0-ezsop.mongodb.net/TodoApp1?retryWrites=true&w=majority";
 
@@ -43,16 +43,16 @@ app.use(express.json());
 // Run the password protected function on all requests
 // app.use(passwordProtected);
 
-// Password Protected
-function passwordProtected(req, res, next) {
-  res.set("WWW-Authenticate", 'Basic realm="Simple Todo App"');
-  // console.log(req.headers.authorization);
-  if (req.headers.authorization == "Basic bGVhcm46dGVzdA==") {
-    next();
-  } else {
-    res.status(401).send("Authentication required");
-  }
-}
+// // Password Protected
+// function passwordProtected(req, res, next) {
+//   res.set("WWW-Authenticate", 'Basic realm="Simple Todo App"');
+//   // console.log(req.headers.authorization);
+//   if (req.headers.authorization == "Basic bGVhcm46dGVzdA==") {
+//     next();
+//   } else {
+//     res.status(401).send("Authentication required");
+//   }
+// }
 
 // When we get a get request to the '/' url (base/index) we are going to return it with html using res.send() method
 app.get("/", function (req, res) {
