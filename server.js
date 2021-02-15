@@ -41,20 +41,6 @@ mongodb.connect(
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Run the password protected function on all requests
-// app.use(passwordProtected);
-
-// // Password Protected
-// function passwordProtected(req, res, next) {
-//   res.set("WWW-Authenticate", 'Basic realm="Simple Todo App"');
-//   // console.log(req.headers.authorization);
-//   if (req.headers.authorization == "Basic bGVhcm46dGVzdA==") {
-//     next();
-//   } else {
-//     res.status(401).send("Authentication required");
-//   }
-// }
-
 // When we get a get request to the '/' url (base/index) we are going to return it with html using res.send() method
 app.get("/", function (req, res) {
   // the find() method is Read from CRUD, and you can also build a query,
