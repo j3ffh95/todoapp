@@ -8,6 +8,7 @@ let sanitizeHtml = require("sanitize-html");
 const app = express();
 let db;
 
+// Choose what port the app needs to listen to
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
